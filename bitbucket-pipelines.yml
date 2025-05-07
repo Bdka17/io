@@ -1,0 +1,13 @@
+pipelines:
+  pull-requests:
+    "**":
+      - step:
+          name: Validate Helm Values
+          image: golang
+          script:
+            - go run validate.go
+      - step:
+          name: Validate Helm Template
+          image: alpine/helm
+          script:
+            - helm template aks-manifest/ --debug
